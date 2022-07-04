@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import {Input} from "./input+button/Input";
+import {Button} from "./input+button/Button";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const App = () => {
+
+    let [message, setMessage] = useState([
+        {message: "message1"},
+        {message: "message2"},
+        {message: "message3"},
+    ])
+
+    let [title, setTitle] = useState("")
+
+    const addMessage = (title: string) => {
+        let newMessage = {message: title}
+        setMessage([newMessage, ...message])
+    }
+
+    const callbackButtonHandler = () => {
+        addMessage(title)
+        setTitle("")
+    }
+
+    return (
+        <>
+            <Input setTitle={setTitle} title={title}/>
+            <Button name={"add"} callback={callbackButtonHandler}/>
+            <div>
+                {message.map((el, index) => <div key={index}>{el.message}</div>)}
+            </div>
+        </>
+    )
 }
-
-export default App;
